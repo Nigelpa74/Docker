@@ -1,0 +1,24 @@
+# Portainer - IPVLAN-L2
+#version: '3.7'
+
+services:
+  portainer:
+    image: portainer/portainer:latest
+    container_name: Portainer
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+        Antares:
+          ipv4_address: 192.168.101.100
+volumes:
+  portainer_data:
+# el anterior comando funcionara solo si se ejecuta el siguiente: "docker volume create portainer_data"
+networks:
+  Antares:
+    driver: ipvlan
+    external: true

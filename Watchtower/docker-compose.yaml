@@ -1,0 +1,24 @@
+# WATCHTOWER - IPVLAN-L2
+#version: "3" problemas de imcompatibilidad
+services:
+  watchtower:
+    container_name: Watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    # schedule= que actualice cada 12PM
+    # cleanup= para limpiar contenedores antiguos
+    # remove-volumes= para limpiar los volumenes sin nombre y antiguos
+    # run-once= para que actulice solo una vez y no insista hasta agotar
+    # debug= chequear como esta corriendo --debug
+    command: --schedule "0 0 12 * * *" --cleanup --remove-volumes --run-once 
+    environment:
+      TZ: "America/Lima"
+    restart: unless-stopped
+    networks:
+        Antares:
+          ipv4_address: 192.168.101.102
+networks:
+  Antares:
+    driver: ipvlan
+    external: true
