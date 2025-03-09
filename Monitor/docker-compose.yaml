@@ -1,0 +1,61 @@
+---
+volumes:
+  prometheus-data: {}
+  grafana-data: {}
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: Prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    restart: unless-stopped
+    networks:
+        Antares:
+          ipv4_address: 192.168.101.105
+  grafana:
+    image: grafana/grafana:latest-ubuntu
+
+    container_name: Grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+        Antares:
+          ipv4_address: 192.168.101.106
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command: "--path.rootfs=/host"
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - /:/host:ro,rslave
+    networks:
+        Antares:
+          ipv4_address: 192.168.101.108
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.51.0
+    container_name: cadvisor
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    restart: unless-stopped
+    networks:
+        Antares:
+          ipv4_address: 192.168.101.107
+networks:
+  Antares:
+    driver: ipvlan
+    external: true

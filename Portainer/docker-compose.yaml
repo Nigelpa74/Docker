@@ -3,7 +3,7 @@
 
 services:
   portainer:
-    image: portainer/portainer:latest
+    image: portainer/portainer-ce:latest
     container_name: Portainer
     restart: unless-stopped
     ports:
@@ -11,13 +11,12 @@ services:
       - "9443:9443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - portainer_data:/data portainer/portainer-ce:lts
     networks:
         Antares:
           ipv4_address: 192.168.101.100
 volumes:
   portainer_data:
-# el anterior comando funcionara solo si se ejecuta el siguiente: "docker volume create portainer_data"
 networks:
   Antares:
     driver: ipvlan
