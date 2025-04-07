@@ -1,0 +1,20 @@
+# Nessus - IPVLAN-L2
+services:
+  nessus:
+    image: tenable/nessus:latest-oracle
+    restart: unless-stopped
+    container_name: Nessus
+    environment:
+      USERNAME: 'admin'
+      PASSWORD: '123456789mix'
+#      ACTIVATION_CODE: <code>
+    ports:
+      - '8834:8834'
+    networks:
+        Antares:
+          ipv4_address: 192.168.101.113
+networks:
+  Antares:
+    driver: ipvlan
+    external: true
+      
