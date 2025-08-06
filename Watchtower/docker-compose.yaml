@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
     networks:
         Antares:
-          ipv4_address: 192.168.101.102
+          ipv4_address: 192.168.18.102
 networks:
   Antares:
     driver: ipvlan

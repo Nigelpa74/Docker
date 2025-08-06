@@ -14,7 +14,7 @@ services:
       - portainer_data:/data portainer/portainer-ce:lts
     networks:
         Antares:
-          ipv4_address: 192.168.101.100
+          ipv4_address: 192.168.18.100
 volumes:
   portainer_data:
 networks:

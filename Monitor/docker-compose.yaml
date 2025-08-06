@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
     networks:
         Antares:
-          ipv4_address: 192.168.101.105
+          ipv4_address: 192.168.18.105
   grafana:
     image: grafana/grafana:latest-ubuntu
 
@@ -26,7 +26,7 @@ services:
     restart: unless-stopped
     networks:
         Antares:
-          ipv4_address: 192.168.101.106
+          ipv4_address: 192.168.18.106
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
     container_name: node_exporter
@@ -37,7 +37,7 @@ services:
       - /:/host:ro,rslave
     networks:
         Antares:
-          ipv4_address: 192.168.101.108
+          ipv4_address: 192.168.18.108
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.51.0
     container_name: cadvisor
@@ -54,7 +54,7 @@ services:
     restart: unless-stopped
     networks:
         Antares:
-          ipv4_address: 192.168.101.107
+          ipv4_address: 192.168.18.107
 networks:
   Antares:
     driver: ipvlan

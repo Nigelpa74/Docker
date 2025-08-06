@@ -34,7 +34,7 @@ services:
       disable: false
     networks:
         Antares:
-          ipv4_address: 192.168.101.109
+          ipv4_address: 192.168.18.109
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -54,7 +54,7 @@ services:
       disable: false
     networks:
         Antares:
-          ipv4_address: 192.168.101.110
+          ipv4_address: 192.168.18.110
 
   redis:
     container_name: immich_redis
@@ -64,7 +64,7 @@ services:
     restart: always
     networks:
         Antares:
-          ipv4_address: 192.168.101.111
+          ipv4_address: 192.168.18.111
 
   database:
     container_name: immich_postgres
@@ -88,7 +88,7 @@ services:
     restart: always
     networks:
         Antares:
-          ipv4_address: 192.168.101.112
+          ipv4_address: 192.168.18.112
 
 volumes:
   model-cache:
