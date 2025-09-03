@@ -10,9 +10,9 @@ services:
 #      ACTIVATION_CODE: <code>
     ports:
       - '8834:8834'
-    networks:
-        Antares:
-          ipv4_address: 192.168.101.113
+  #  networks:
+ #       Antares:
+#          ipv4_address: **
 networks:
   Antares:
     driver: ipvlan
