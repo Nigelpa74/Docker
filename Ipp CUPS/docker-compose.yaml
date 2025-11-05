@@ -1,36 +1,28 @@
 # IPP-CUPS - IPVLAN-L2
 services:
   cups:
-    image: olbat/cupsd:latest
+    image: anujdatar/cups:latest
     container_name: Cups-server
     restart: unless-stopped
+    hostname: cups-server
     
     # Privilegios necesarios para acceder a dispositivos USB
     privileged: true
     
     ports:
-      # Puerto para la interfaz web de administración
+      # Puerto para la interfaz web de administración y IPP
       - "631:631"
-      # Puerto IPP alternativo si necesitas exponerlo
-      # - "631:631/udp"
     
     volumes:
       # Persistencia de configuración de CUPS
       - cups_config:/etc/cups
-      # Persistencia de trabajos de impresión
-      - cups_spool:/var/spool/cups
-      # Logs de CUPS
-      - cups_logs:/var/log/cups
       # Acceso a dispositivos USB (impresoras conectadas)
       - /dev/bus/usb:/dev/bus/usb
     
     environment:
-      # Usuario administrador de CUPS
-      - CUPS_USER_ADMIN=admin
-      # Contraseña del administrador (CAMBIAR en producción)
-      - CUPS_USER_PASSWORD=123456789mix
-      # Permitir administración remota
-      - CUPS_WEBINTERFACE=yes
+      - TZ=America/Lima
+      - CUPSADMIN=batman
+      - CUPSPASSWORD=batcave_password
     
     networks:
       Antares:
@@ -38,8 +30,8 @@ services:
 
   # Servicio opcional: Servidor de archivos Samba para compartir impresoras en Windows
   samba:
-    image: dperson/samba
-    container_name: cups-samba
+    image: dperson/samba:aarch64
+    container_name: Cups-samba
     restart: unless-stopped
     
     ports:
@@ -64,10 +56,6 @@ services:
 
 volumes:
   cups_config:
-    driver: local
-  cups_spool:
-    driver: local
-  cups_logs:
     driver: local
   samba_spool:
     driver: local
